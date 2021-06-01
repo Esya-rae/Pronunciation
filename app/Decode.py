@@ -11,7 +11,7 @@ from app.Word import Word
 class To_phonemes():
 
     def __init__(self) -> None:
-        DIR = "/usr/local/lib/python3.5/pocketsphinx.py"
+        DIR = "/home/ubuntu/.local/lib/python3.7/site-packages/pocketsphinx/pocketsphinx.py"
         MODELDIR = DIR + "model"
         DATADIR = '../data'
         self.TEMP_RAW_PATH = path.join(DATADIR, 'temp.raw')
