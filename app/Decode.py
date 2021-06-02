@@ -13,7 +13,7 @@ class To_phonemes():
     def __init__(self) -> None:
         DIR = "/home/ubuntu/.local/lib/python3.7/site-packages/pocketsphinx/"
         MODELDIR = DIR + "model"
-        DATADIR = '../data'
+        DATADIR = '/Pronunciaton/data'
         self.TEMP_RAW_PATH = path.join(DATADIR, 'temp.raw')
 
         config = Decoder.default_config()
