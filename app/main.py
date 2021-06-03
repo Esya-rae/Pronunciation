@@ -1,12 +1,16 @@
-from fastapi import FastAPI, File, UploadFile
+from fastapi import FastAPI, File, UploadFile, Form
 from fastapi.param_functions import Body
 from fastapi.params import File
 from pydantic import BaseModel
 from random import randint
-from  app.Word import Word
+from app.Word import Word
 from app.Decode import To_phonemes
-import app.Compare
+from app.Compare import find_right_phonemes
 import os
+import json
+from fastapi.encoders import jsonable_encoder
+from fastapi.responses import JSONResponse
+
 
 import requests
 import shutil
@@ -19,7 +23,7 @@ t_p = To_phonemes()
 
 @app.get('/word')
 def get_word():
-    return db[randint(0, len(db))]
+    return db[randint(0, len(db) - 1)]
 
 @app.post('/word')
 def add_word(word: Word):
@@ -32,10 +36,12 @@ def delete_word(word_id: int):
     return {}
 
 @app.post('/audio')
-def create_audio(word: str, file: UploadFile = File(...)):
+def create_audio(word: str = Form(...), file: UploadFile = File(...)):
+    #return "OK"
     with open(f'{file.filename}', "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
     decoded_audio = ''.join(t_p.decode(file.filename).data)
     print(decoded_audio, word)
     os.remove(file.filename)
-    return app.Compare.find_right_phonemes(decoded_audio, word)
+    return find_right_phonemes(decoded_audio, word)
+
