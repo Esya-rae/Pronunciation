@@ -1,5 +1,5 @@
 # Pronunciation
-For the installation of the project follow the stepd
+For the installation of the project follow the steps
 
 1. Start a virtual environment
     virtualenv env
@@ -11,3 +11,7 @@ For the installation of the project follow the stepd
     pip3 install pocketsphinx
     pip3 install soundfile
     pip3 install librosa
+     pip3 install python-multipart
+4. If you get this error "RuntimeError: new_Decoder returned -1":
+        Please change the directory in Decode.py to the directory where is your pocketsphinx.
+
