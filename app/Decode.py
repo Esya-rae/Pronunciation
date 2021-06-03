@@ -11,14 +11,15 @@ from app.Word import Word
 class To_phonemes():
 
     def __init__(self) -> None:
-        DIR = "/home/ubuntu/.local/lib/python3.7/site-packages/pocketsphinx/"
-        MODELDIR = DIR + "model"
-        DATADIR = 'data'
-        self.TEMP_RAW_PATH = path.join(DATADIR, 'temp.raw')
-
+        directory = "/usr/local/lib/python3.8/dist-packages/pocketsphinx/"
+        model_directory = directory + "model"
+        data_directore = '/home/ubuntu/Pronunciation/app/'
+        self.raw_path = path.join(directory, 'temp.raw')
+        print(self.raw_path)
         config = Decoder.default_config()
-        config.set_string('-hmm', path.join(MODELDIR, 'en-us'))
-        config.set_string('-allphone', path.join(MODELDIR, 'en-us/en-us-phone.lm.dmp'))
+        config.set_string('-hmm', path.join(model_directory, 'en-us'))
+        config.set_string('-allphone', path.join(model_directory, 'en-us/en-us-phone.lm.dmp'))
+        config.set_string('-logfn', 'nul')
         config.set_string('-logfn', 'nul')
         config.set_float('-lw', 2.0)
         config.set_float('-beam', 1e-20)
@@ -26,14 +27,15 @@ class To_phonemes():
 
         # Decode streaming data.
         self.decoder = Decoder(config)
-    
+
     def decode(self, path):
         # Convert into 16KHz mono '.raw' file
         print(path)
         y, sr = librosa.load(path, sr=16000, mono=True)
-        sf.write(file=self.TEMP_RAW_PATH, data=y, samplerate=sr, subtype='PCM_16', format='RAW')
+        sf.write(file=self.raw_path, data=y, samplerate=sr, subtype='PCM_16', format='RAW')
+        print(self.raw_path, 2)
         self.decoder.start_utt()
-        stream = open(self.TEMP_RAW_PATH, 'rb')
+        stream = open(self.raw_path, 'rb')
         while True:
             buf = stream.read(1024)
             if buf:
