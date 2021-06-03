@@ -1,3 +1,4 @@
+import json
 def fill_compare_matrix(pronunciation, word_phonemes):
     compare_matrix = [[0] * (len(word_phonemes) + 1) for i in range(len(pronunciation) + 1)]
     for i in range(1, len(pronunciation) + 1):
@@ -18,7 +19,7 @@ def find_right_phonemes(pronunciation, word_phonemes):
     while pr_it > 0 and w_it > 0:
         if pronunciation[pr_it] == word_phonemes[w_it]:
             matched_phonemes.append(word_phonemes[w_it])
-            if prev_right - w_it > 1:
+            if prev_right != len(word_phonemes) and prev_right - w_it > 1:
                 mistakes[prev_right] = True
             else:
                 mistakes[w_it] = False
@@ -28,5 +29,13 @@ def find_right_phonemes(pronunciation, word_phonemes):
             pr_it -= 1
         else:
             w_it -= 1
-    mistakes.reverse()
-    return mistakes
+    dict_res = []
+    for i in range(len(word_phonemes)):
+        dict_temp = dict()
+        dict_temp["symbol"] = word_phonemes[i]
+        dict_temp["is_correct"] = not mistakes[i]
+        dict_res.append(dict_temp)
+
+    data = {"result" : dict_res}
+    return data
+                           
