@@ -14,4 +14,6 @@ For the installation of the project follow the steps
      pip3 install python-multipart
 4. If you get this error "RuntimeError: new_Decoder returned -1":
         Please change the directory in Decode.py to the directory where is your pocketsphinx.
+5. hypercorn app.main:app --reload
+        Attention! You need to make it from direcory where you have app folder
 
