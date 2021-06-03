@@ -10,7 +10,7 @@ class Phonemes:
     def delete_silence(self):
         result = []
         for ph in self.data:
-            if ph != 'SIL' and ph != '+SPN+':
+            if ph != 'SIL' and ph != '+SPN+'  and ph != '+NSN+':
                 result.append(ph)
         self.data = result
 
@@ -29,3 +29,4 @@ class Phonemes:
             self.form = "CMUBET"
         else:
             self.form = "IPA"
+
