@@ -26,7 +26,7 @@ class To_phonemes():
         config.set_string('-allphone', path.join(model_directory, 'en-us/en-us-phone.lm.dmp'))
         config.set_string('-logfn', 'nul')
 
-        # Decode streaming data.
+        #Make a decoder on the configuration
         self.decoder = Decoder(config)
 
     def decode(self, path):
